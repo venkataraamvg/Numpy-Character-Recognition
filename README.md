@@ -2,19 +2,25 @@
 **B.E. Computer Science and Engineering (AI/ML) | CIT Chennai**
 
 ## 1.0 Project Objective
-The goal of this assignment is to build a multi-class neural network entirely from scratch using only NumPy, completely avoiding frameworks like TensorFlow or PyTorch[cite: 1]. The network is designed to classify 35 distinct alphanumeric classes (digits 1-9 and uppercase letters A-Z)[cite: 1]. Building this from the ground up demonstrates a practical understanding of the core mathematics behind forward propagation, activation layers, and gradient descent optimization[cite: 1].
+The goal of this assignment is to build a multi-class neural network entirely from scratch using only NumPy, completely avoiding frameworks like TensorFlow or PyTorch[cite: 1]. The network is designed to classify 35 distinct alphanumeric classes (digits 1-9 and uppercase letters A-Z)[cite: 1]. Building this from the ground up demonstrates a practical understanding of the core mathematics behind forward propagation, activation layers, and gradient descent optimization.
+
+### 1.1 Development Environment
+* **Platform:** Ubuntu running via Windows Subsystem for Linux (WSL 2)
+* **Environment:** Conda
+* **IDE:** Visual Studio Code Insiders (connected remotely to WSL)
+* **Hardware:** ASUS ROG Strix (AMD Ryzen 9 8940HX, NVIDIA RTX 5070 Ti GPU) processing unaccelerated pure-NumPy operations via CPU.
 
 ## 2.0 Step-by-Step Implementation Methodology
 The implementation was divided into four distinct phases to satisfy all data preparation and mathematical requirements[cite: 1].
 
 ### Phase 1: Data Preparation Pipeline
 1. **Dataset Extraction:** The EMNIST "ByClass" dataset was utilized. To optimize memory footprint and execution speed, a custom Python script parsed the raw dataset line-by-line.
-2. **Filtering & Sampling:** The script dynamically filtered out the digit '0' and all lowercase letters to isolate the target classes[cite: 1]. Exactly 1,000 samples were extracted for each of the 35 classes (exceeding the 50-sample minimum), yielding a dataset of 35,000 images[cite: 1].
+2. **Filtering & Sampling:** The script dynamically filtered out the digit '0' and all lowercase letters to isolate the target classes. Exactly 1,000 samples were extracted for each of the 35 classes (exceeding the 50-sample minimum), yielding a dataset of 35,000 images[cite: 1].
 3. **Preprocessing:** The 28x28 pixel images were flattened into fixed-size 1D arrays of 784 features[cite: 1]. Pixel intensities were normalized by dividing by 255.0 to scale values between 0 and 1, ensuring stable gradient descent[cite: 1].
 4. **Data Splitting:** The final dataset was randomly shuffled and split into three sets: 70% Training, 15% Validation, and 15% Testing[cite: 1]. Labels were converted to one-hot encoded vectors.
 
 ### Phase 2: Neural Network Construction
-1. **Architecture Definition:** A two-layer Multi-Layer Perceptron (MLP) was defined with an input layer (784 neurons), one hidden layer (256 neurons), and an output layer (35 neurons).
+1. **Architecture Definition:** A two-layer Multi-Layer Perceptron (MLP) was defined with an input layer (784 neurons), one hidden layer (128 neurons), and an output layer (35 neurons).
 2. **Parameter Initialization:** Weight matrices were initialized using small random values to break symmetry, ensuring neurons learn distinct features. Bias vectors were initialized to zero.
 3. **Activation Function Implementation:** A Rectified Linear Unit (ReLU) was implemented for the hidden layer to introduce non-linearity[cite: 1]. A Softmax function, stabilized by subtracting the maximum Z value to prevent exponential overflow, was implemented for the output layer[cite: 1].
 
@@ -45,7 +51,7 @@ The confusion matrix demonstrates a strong true-positive diagonal line, confirmi
 
 **Incorrect Predictions:**
 ![Incorrect Predictions](incorrect_predictions.png)
-Error analysis of at least 5 incorrect predictions revealed structural limitations inherent to flattening 2D topological data into 1D arrays[cite: 1]. Specific failures include:
+Error analysis of at least 5 incorrect predictions revealed structural limitations inherent to flattening 2D topological data into 1D arrays[cite: 1]. Specific failures include[cite: 1]:
 * **True 1, Pred I:** The model confused a straight-line '1' with an un-serifed capital 'I' because their active pixel zones overlap perfectly when flattened.
 * **True G, Pred Q:** The circular body and internal stroke of the handwritten 'G' mimic the closed loop and tail of a 'Q'.
 * **True V, Pred 4:** The jagged angle of the handwritten 'V' created dense pixel clusters that the network falsely associated with the intersecting cross-strokes of a '4'.
