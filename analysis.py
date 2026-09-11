@@ -2,13 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import neural_network as nn
 
-# 1. Helper function to decode numerical labels back to text
+# 1 Helper function 
 def get_char(index):
-    """
-    Converts a 0-34 index back into the corresponding character.
-    0-8 represent digits 1-9.
-    9-34 represent uppercase letters A-Z.
-    """
+    #Conversion numbers -> char 
     if index < 9:
         return str(index + 1)
     else:
@@ -22,15 +18,14 @@ params = np.load('trained_params.npy', allow_pickle=True).item()
 # 2. Run the test data through the trained network
 A2_test, _ = nn.forward_propagation(X_test, params)
 
-# Convert one-hot vectors and probabilities back to standard label integers (0 to 34)
+# Convert one-hot vectors -> standard label integers
 y_pred = np.argmax(A2_test, axis=1)
 y_true = np.argmax(Y_test, axis=1)
 
 test_accuracy = np.mean(y_pred == y_true)
 print(f"Final Test Accuracy: {test_accuracy * 100:.2f}%")
 
-# 3. Generate the Confusion Matrix
-# Creates a 35x35 grid to track True vs Predicted classifications
+# 3.confution matrix generation
 cm = np.zeros((35, 35), dtype=int)
 for t, p in zip(y_true, y_pred):
     cm[t, p] += 1
@@ -44,8 +39,7 @@ plt.ylabel('True Label')
 plt.savefig('confusion_matrix.png')
 print("Saved 'confusion_matrix.png'")
 
-# 4. Analyze Incorrect Predictions
-# Find all indices where the model guessed wrong
+# 4 analyze Incorrect Predictions
 incorrect_indices = np.where(y_pred != y_true)[0]
 
 # Select the first 5 incorrect predictions
@@ -61,7 +55,7 @@ for i, idx in enumerate(selected_incorrect):
     axes[i].imshow(img, cmap='gray')
     axes[i].set_title(f"True: {true_char}\nPred: {pred_char}")
     axes[i].axis('off')
-
+#saving the incorrect prediction images
 plt.tight_layout()
 plt.savefig('incorrect_predictions.png')
 print("Saved 'incorrect_predictions.png'")

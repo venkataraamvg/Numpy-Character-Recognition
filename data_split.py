@@ -1,6 +1,6 @@
 import numpy as np
 
-# 1. Load the generated dataset
+# 1. Loading dataset
 X = np.load('x_data.npy')
 Y = np.load('y_data.npy')
 num_samples = X.shape[0]
@@ -8,24 +8,22 @@ num_samples = X.shape[0]
 print(f"Loaded {num_samples} total images.")
 
 # 2. Shuffle the dataset randomly
-# We generate a list of random indices and shuffle both X and Y in the exact same order
-np.random.seed(42) # Set seed for reproducibility
+np.random.seed(42) 
 shuffled_indices = np.random.permutation(num_samples)
 X_shuffled = X[shuffled_indices]
 Y_shuffled = Y[shuffled_indices]
 
-# 3. Convert labels from (1-35) to (0-34) for zero-indexed arrays
+# 3. Coversion (1-35) -> (0-34) 
 Y_adjusted = Y_shuffled - 1
 
-# 4. Apply One-Hot Encoding for 35 classes
-# This turns a label like '2' into [0, 0, 1, 0, ..., 0]
+# 4. Appling One-Hot Encoding
 Y_one_hot = np.eye(35)[Y_adjusted]
 
-# 5. Define split ratios (70% Train, 15% Validation, 15% Test)
+# 5. Splitting
 train_size = int(num_samples * 0.70)
 val_size = int(num_samples * 0.15)
 
-# 6. Slice the arrays into their final sets
+# 6. Slicing
 X_train = X_shuffled[:train_size]
 Y_train = Y_one_hot[:train_size]
 
