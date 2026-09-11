@@ -14,7 +14,7 @@ The implementation was divided into four distinct phases to satisfy all data pre
 4. **Data Splitting:** The final dataset was randomly shuffled and split into three sets: 70% Training, 15% Validation, and 15% Testing[cite: 1]. Labels were converted to one-hot encoded vectors.
 
 ### Phase 2: Neural Network Construction
-1. **Architecture Definition:** A two-layer Multi-Layer Perceptron (MLP) was defined with an input layer (784 neurons), one hidden layer (128 neurons), and an output layer (35 neurons).
+1. **Architecture Definition:** A two-layer Multi-Layer Perceptron (MLP) was defined with an input layer (784 neurons), one hidden layer (256 neurons), and an output layer (35 neurons).
 2. **Parameter Initialization:** Weight matrices were initialized using small random values to break symmetry, ensuring neurons learn distinct features. Bias vectors were initialized to zero.
 3. **Activation Function Implementation:** A Rectified Linear Unit (ReLU) was implemented for the hidden layer to introduce non-linearity[cite: 1]. A Softmax function, stabilized by subtracting the maximum Z value to prevent exponential overflow, was implemented for the output layer[cite: 1].
 
